@@ -26,3 +26,17 @@
     background: #fff;
     color: #333;
   }
+
+  .navbar .register {
+    text-decoration: none;
+    color: #f2f2f2;
+    padding: 8px;
+    border: 1px solid #f2f2f2;
+    border-radius: 4px;
+    background-color: #b45ad8;
+    transition: all .1s ease-in;
+  }
+
+  .navbar .register:hover {
+      background-color: orangered;
+  }
