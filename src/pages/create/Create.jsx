@@ -1,29 +1,47 @@
 import { useRef, useState } from 'react'
+import { useFetch } from '../../usefetch/useFetch'
+import { useNavigate } from 'react-router-dom'
 import './Create.css'
+import { useEffect } from 'react'
 
 export default function Create() {
   const [title, setTitle] = useState('')
   const [cookingTime, setCookingTime] = useState('')
   const [method, setMethod] = useState('')
- const [ingredients, setIngredients] = useState([])
- const [newIngredient, setNewIngredient] = useState('')
-const ingredientInput = useRef(null)
+  const [ingredients, setIngredients] = useState([])
+  const [newIngredient, setNewIngredient] = useState('')
+
+  const navigate = useNavigate()
+  const { postData, data, error } = useFetch("http://localhost:3000/recipes", "POST")
+
+  const ingredientInput = useRef(null)
 
   const handleSubmit = (e) => {
     e.preventDefault()
     console.log(title, cookingTime, method, newIngredient, ingredients)
+    postData({title, cookingTime: cookingTime + " minutes", method, ingredients})
+
   }
 
   const addIngredient = (e) => {
     e.preventDefault()
     let ing = newIngredient.trim()
-    
-    if(ing && !ingredients.includes(ing)){
+
+    if (ing && !ingredients.includes(ing)) {
       setIngredients(prevIngredients => [...prevIngredients, ing])
     }
     setNewIngredient('')
     ingredientInput.current.focus()
-}
+  }
+
+  useEffect(()=> {
+    if(data) {
+      navigate('/')
+    }
+  }, [data])
+
+
+
   return (
     <div className='create'>
       <h2 className='page-title'>Add a new Recipe</h2>
@@ -37,11 +55,11 @@ const ingredientInput = useRef(null)
         <label>
           <span>Ingredients:</span>
           <div className='ingredients'>
-            <input type='text' onChange={(e) => setNewIngredient(e.target.value)} value={newIngredient} ref={ingredientInput}/>
+            <input type='text' onChange={(e) => setNewIngredient(e.target.value)} value={newIngredient} ref={ingredientInput} />
             <button className='btn' onClick={(e) => addIngredient(e)}>add</button>
           </div>
         </label>
-          <p className="ing">Current ingredients: {ingredients.map(el => <em key={el}>{el},      </em>)}</p>
+        <p className="ing">Current ingredients: {ingredients.map(el => <em key={el}>{el},      </em>)}</p>
 
 
         <label >

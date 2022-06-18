@@ -1,45 +1,61 @@
 import { useState, useEffect } from "react"
 
-export const useFetch = (url) => {
+export const useFetch = (url, method = "GET") => {
   const [data, setData] = useState(null)
   const [isPending, setIsPending] = useState(false)
   const [error, setError] = useState(null)
+  const [fetchOptions, setFetchOptions] = useState(null)
+
+  const postData = (storeData) => {
+    setFetchOptions({
+      method : "POST",
+      headers : {"Content-Type" : "application/json"},
+      body : JSON.stringify(storeData)
+    })
+  }
+
 
   useEffect(() => {
     const controller = new AbortController()
 
-    const fetchData = async () => {
+    const fetchData = async (fetchOptions) => {
       setIsPending(true)
-      
+
       try {
-        const res = await fetch(url, { signal: controller.signal })
-        console.log(res)
+        const res = await fetch(url, { ...fetchOptions, signal: controller.signal })
+
         if(!res.ok) {
-            
           throw new Error(res.statusText)
         }
         const data = await res.json()
+        console.log(res.ok, 'res.ok')
 
-        setIsPending(false)
+
         setData(data)
         setError(null)
       } catch (err) {
         if (err.name === "AbortError") {
-            console.log(err)
+            console.log(err, err.name)
           console.log("the fetch was aborted")
         } else {
-          setIsPending(false)
           setError('Could not fetch the data')
         }
+      } finally {
+        setIsPending(false)
       }
     }
 
-    fetchData()
+    if(method === "GET"){
+      fetchData()
+    }
+    if(method === "POST" && fetchOptions){
+      fetchData(fetchOptions)
+    }
 
-    return () => controller.abort()
-    
+    // return () => controller.abort()
 
-  }, [url])
 
-  return { data, isPending, error }
+  }, [url, method, fetchOptions])
+
+  return { data, isPending, error, postData }
 }

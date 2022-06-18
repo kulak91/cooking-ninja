@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+
 import './RecipeList.css'
 
 export default function RecipeList({recipes}) {
@@ -12,6 +13,7 @@ export default function RecipeList({recipes}) {
                 <p>{recipe.cookingTime} to make</p>
                 <div>{recipe.method.substring(0, 100)}</div>
                 <Link to={`/recipes/${recipe.id}`}>Details ..</Link>
+                {/* <button onClick={()=>{deleteRecipe(recipe.id)}}>Delete recipe</button> */}
             </div>
         ))}
     </div>
