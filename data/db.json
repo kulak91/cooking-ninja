@@ -13,18 +13,6 @@
       "cookingTime": "45 minutes"
     },
     {
-      "id": "2",
-      "title": "Veggie Pizza",
-      "ingredients": [
-        "1 Base",
-        "Tomata pasata",
-        "1 Green pepper",
-        "100g Mushrooms"
-      ],
-      "method": "1. Pre-heat the oven to 200C/3C/gas 5. Add the pasata, green pepper and mushrooms to the base. Place the lid on the oven and cook for 30 minutes. 5. Serve with a slaw of your choice",
-      "cookingTime": "35 minutes"
-    },
-    {
       "id": "3",
       "title": "Greek Salad",
       "ingredients": [
@@ -46,16 +34,6 @@
         "cake"
       ],
       "id": "XzkbQvf"
-    },
-    {
-      "title": "Test Cake",
-      "cookingTime": "2 minutes",
-      "method": "Test + cake",
-      "ingredients": [
-        "test",
-        "cake"
-      ],
-      "id": "v96PUFs"
     },
     {
       "title": "Okay",
